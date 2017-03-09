@@ -2,6 +2,7 @@ from .file_functions import read_in_chunks, get_directory_for_filename, create_d
 from .git_functions import get_version_string_from_git
 from .hash_functions import md5sum
 from .fail_safe_file_operations import get_binary_from_file, write_binary_to_file, get_safe_name, delete_file, get_files_in_dir
+from .config_functions import update_config_from_env
 
 __all__ = [
     'get_directory_for_filename',
@@ -14,5 +15,6 @@ __all__ = [
     'write_binary_to_file',
     'get_safe_name',
     'delete_file',
-    'get_files_in_dir'
+    'get_files_in_dir',
+    'update_config_from_env',
 ]
