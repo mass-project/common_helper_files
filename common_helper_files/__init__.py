@@ -1,3 +1,5 @@
+__version__ = '0.1.5'
+
 from .file_functions import read_in_chunks, get_directory_for_filename, create_dir_for_file, human_readable_file_size
 from .git_functions import get_version_string_from_git
 from .hash_functions import md5sum

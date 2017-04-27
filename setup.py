@@ -1,10 +1,11 @@
 import os
 import subprocess
 from setuptools import setup, find_packages
+from common_helper_files import __version__
 
 setup(
     name="common_helper_files",
-    version=subprocess.check_output(['git', 'describe', '--always'], cwd=os.path.dirname(os.path.abspath(__file__))).strip().decode('utf-8'),
+    version=__version__,
     packages=find_packages(),
     install_requires=[
         'hurry.filesize >= 0.9'
