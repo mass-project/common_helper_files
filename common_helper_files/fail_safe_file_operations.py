@@ -27,6 +27,24 @@ def get_binary_from_file(file_path):
     return binary
 
 
+def get_string_list_from_file(file_path):
+    """
+    Fail-safe file read operation returning a list of text strings.
+    Errors are logged. No exception raised.
+
+    :param file_path: Path of the file. Can be absolute or relative to the current directory.
+    :type file_path: str
+    :return: file's content as text string list; returns empty list on error
+    """
+    try:
+        raw = get_binary_from_file(file_path)
+        string = raw.decode(encoding='utf_8', errors='replace')
+        return string.split("\n")
+    except Exception as e:
+        logging.error("Could not read file: {} {}".format(sys.exc_info()[0].__name__, e))
+        return []
+
+
 def write_binary_to_file(file_binary, file_path, overwrite=False, file_copy=False):
     """
     Fail-safe file write operation. Creates directories if needed.

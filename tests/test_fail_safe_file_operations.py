@@ -4,7 +4,7 @@ from tempfile import TemporaryDirectory
 
 from common_helper_files.fail_safe_file_operations import get_binary_from_file,\
     write_binary_to_file, delete_file, get_safe_name, _get_counted_file_path,\
-    get_files_in_dir
+    get_files_in_dir, get_string_list_from_file
 from common_helper_files.file_functions import get_directory_for_filename
 
 
@@ -28,6 +28,11 @@ class Test_FailSafeFileOperations(unittest.TestCase):
         none_existing_file_path = os.path.join(self.get_directory_of_current_file(), "data", "none_existing_file")
         file_binary = get_binary_from_file(none_existing_file_path)
         self.assertEqual(file_binary, b'', "content not correct")
+
+    def test_fail_safe_read_file_string_list(self):
+        test_file_path = os.path.join(self.get_directory_of_current_file(), "data", "multiline_test.txt")
+        lines = get_string_list_from_file(test_file_path)
+        self.assertEqual(lines, ['first line', 'second line', 'th\ufffdrd line', '', 'first line'], "lines not correct")
 
     def test_fail_safe_write_file(self):
         file_path = os.path.join(self.tmp_dir.name, "test_folder", "test_file")
@@ -76,7 +81,7 @@ class Test_FailSafeFileOperations(unittest.TestCase):
         result = get_files_in_dir(test_dir_path)
         self.assertIn(os.path.join(test_dir_path, "read_test"), result, "file in root folder not found")
         self.assertIn(os.path.join(test_dir_path, "test_folder/generic_test_file"), result, "file in sub folder not found")
-        self.assertEqual(len(result), 2, "number of found files not correct")
+        self.assertEqual(len(result), 3, "number of found files not correct")
 
     def test_get_files_in_dir_error(self):
         result = get_files_in_dir("/none_existing/dir")
