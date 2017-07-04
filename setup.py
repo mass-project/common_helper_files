@@ -1,5 +1,3 @@
-import os
-import subprocess
 from setuptools import setup, find_packages
 from common_helper_files import __version__
 
@@ -10,5 +8,6 @@ setup(
     install_requires=[
         'hurry.filesize >= 0.9'
     ],
-    description="file operation helper functions"
+    description="file operation helper functions",
+    license="MIT License"
 )
