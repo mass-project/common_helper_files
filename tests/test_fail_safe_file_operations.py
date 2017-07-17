@@ -2,10 +2,11 @@ import unittest
 import os
 from tempfile import TemporaryDirectory
 
-from common_helper_files.fail_safe_file_operations import get_binary_from_file,\
-    write_binary_to_file, delete_file, get_safe_name, _get_counted_file_path,\
-    get_files_in_dir, get_string_list_from_file
-from common_helper_files.file_functions import get_directory_for_filename
+from common_helper_files import get_binary_from_file,\
+    write_binary_to_file, delete_file, get_safe_name,\
+    get_files_in_dir, get_string_list_from_file,\
+    get_dirs_in_dir, get_directory_for_filename
+from common_helper_files.fail_safe_file_operations import _get_counted_file_path
 
 
 class Test_FailSafeFileOperations(unittest.TestCase):
@@ -86,6 +87,18 @@ class Test_FailSafeFileOperations(unittest.TestCase):
     def test_get_files_in_dir_error(self):
         result = get_files_in_dir("/none_existing/dir")
         self.assertEqual(result, [], "error result should be an empty list")
+
+    def test_get_dirs(self):
+        test_dirs = ["dir_1", "dir_2", "dir_1/sub_dir"]
+        for item in test_dirs:
+            os.mkdir(os.path.join(self.tmp_dir.name, item))
+        result = get_dirs_in_dir(self.tmp_dir.name)
+        self.assertEqual(sorted(result), [os.path.join(self.tmp_dir.name, "dir_1"), os.path.join(self.tmp_dir.name, "dir_2")], "found dirs not correct")
+
+    def test_get_dirs_in_dir_error(self):
+        result = get_dirs_in_dir("/none_existing/dir")
+        self.assertEqual(result, [], "error result should be an empty list")
+
 
 if __name__ == "__main__":
     unittest.main()

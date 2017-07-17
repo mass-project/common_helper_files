@@ -143,3 +143,23 @@ def get_files_in_dir(directory_path):
     except Exception as e:
         logging.error("Could not get files: {} {}".format(sys.exc_info()[0].__name__, e))
     return result
+
+
+def get_dirs_in_dir(directory_path):
+    """
+    Returns a list with the absolute paths of all 1st level sub-directories in the directory directory_path.
+
+    :param directory_path: directory including sub-directories
+    :type directory_path: str
+    :return: list
+    """
+    result = []
+    try:
+        dir_content = os.listdir(directory_path)
+        for item in dir_content:
+            dir_path = os.path.join(directory_path, item)
+            if os.path.isdir(dir_path):
+                result.append(dir_path)
+    except Exception as e:
+        logging.error("Could not get directories: {} {}".format(sys.exc_info()[0].__name__, e))
+    return result
